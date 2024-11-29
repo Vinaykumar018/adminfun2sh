@@ -130,7 +130,7 @@ export default function CreateOrUpdateProductForm({
     useCreateProductMutation();
   const { mutate: updateProduct, isLoading: updating } =
     useUpdateProductMutation();
-
+  const [shortDescription, setShortDescription] = useState('');
   const [productCategory, setProductCategory] = useState(null);
   const [sizeChart, setSizeChart] = useState(null); // Manage size chart state
   const [lowerImageHighlight, setLowerImageHighlight] = useState(null);
@@ -144,6 +144,7 @@ export default function CreateOrUpdateProductForm({
       product_category: productCategory,
       size_chart: sizeChart,
       lower_image_highlight: lowerImageHighlight, 
+      short_description:shortDescription
       
     };
 
@@ -424,18 +425,35 @@ export default function CreateOrUpdateProductForm({
 </div>
 
 <div className="mb-5">
+        <label htmlFor="short_description" className="block text-gray-700 font-medium mb-2">Short Description</label>
+        <textarea
+          id="short_description"
+          name="short_description"
+          value={shortDescription}
+          onChange={(e) => setShortDescription(e.target.value)}
+          placeholder="Enter a short description..."
+          className="block w-full px-4 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 resize-none"
+          rows={3} // Adjust the height of the textarea as needed
+        />
+      </div>
+
+<div className="mb-5">
         <Label>Manage Size Chart</Label>
         <select
-          id="size_chart"
-          name="size_chart"
-          value={sizeChart || ""}
-          onChange={(e) => setSizeChart(e.target.value === "" ? null : e.target.value === "true")} // Convert to true/false/null
-          className="block w-full px-4 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
-        >
-          <option value="" className="text-gray-700">Select Size Chart...</option>
-          <option value="true" className="text-gray-700">True</option>
-          <option value="false" className="text-gray-700">False</option>
-        </select>
+  id="size_chart"
+  name="size_chart"
+  value={sizeChart || ""}
+  onChange={(e) => setSizeChart(e.target.value || null)} // Handle empty value
+  className="block w-full px-4 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+>
+  <option value="" className="text-gray-700">Select Size Chart...</option>
+  <option value="t-shirt" className="text-gray-700">T-shirt Size Chart</option>
+  <option value="shirt" className="text-gray-700">Shirt Size Chart</option>
+  <option value="oversized-tshirt" className="text-gray-700">Oversized T-shirt Size Chart</option>
+  <option value="hoodie" className="text-gray-700">Hoodie Size Chart</option>
+  <option value="oversized-hoodie" className="text-gray-700">Oversized Hoodie Size Chart</option>
+</select>
+
       </div>
       <div className="mb-5">
         <Label>Lower Image Highlight</Label>
